@@ -12,3 +12,4 @@
 /Users/oleksii/Documents/OPAM/home-appliances-store/obj/Debug/net10.0/HomeAppliancesStore.pdb
 /Users/oleksii/Documents/OPAM/home-appliances-store/obj/Debug/net10.0/..genruntimeconfig.cache
 /Users/oleksii/Documents/OPAM/home-appliances-store/obj/Debug/net10.0/ref/HomeAppliancesStore.dll
+/Users/oleksii/Documents/OPAM/home-appliances-store/bin/Debug/net10.0/HomeAppliancesStore.dll.config
