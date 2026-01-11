@@ -1,4 +1,8 @@
-﻿using HomeAppliancesStore.Modules.Auth;
+// <copyright file="Program.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
+using HomeAppliancesStore.Modules.Auth;
 using HomeAppliancesStore.Modules.Main;
 using HomeAppliancesStore.Shared;
 
