@@ -15,6 +15,12 @@ namespace HomeAppliancesStore.Shared
 
         private static void EnsureFileExists(string path, string header)
         {
+            string? directory = Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
             if (!File.Exists(path))
             {
                 File.WriteAllText(path, header + "\n");

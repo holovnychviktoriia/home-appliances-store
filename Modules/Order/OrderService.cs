@@ -12,7 +12,7 @@ namespace HomeAppliancesStore.Modules.Order
 {
     public class OrderService
     {
-        private readonly string _ordersFile = Path.Combine("Files", "orders.csv");
+        private readonly string _ordersFile = Path.Combine("Database", "orders.csv");
         private readonly ProductService _productService;
         private readonly UserService _userService;
 

@@ -9,7 +9,7 @@ namespace HomeAppliancesStore.Modules.Admin
     public class AdminService
     {
         private readonly UserService _userService;
-        private readonly string _ordersFile = Path.Combine("Files", "orders.csv");
+        private readonly string _ordersFile = Path.Combine("Database", "orders.csv");
 
         public AdminService()
         {
