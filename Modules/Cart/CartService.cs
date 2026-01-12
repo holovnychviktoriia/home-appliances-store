@@ -1,3 +1,7 @@
+// <copyright file="CartService.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,49 +9,49 @@ namespace HomeAppliancesStore.Modules.Cart
 {
     public class CartService
     {
-        private List<CartEntity> _items = new List<CartEntity>();
+        private readonly List<CartEntity> items = new List<CartEntity>();
 
         public void AddItem(int productId, string productName, decimal price, int quantity)
         {
-            var existingItem = _items.FirstOrDefault(i => i.ProductId == productId);
+            var existingItem = this.items.FirstOrDefault(i => i.ProductId == productId);
             if (existingItem != null)
             {
                 existingItem.Quantity += quantity;
             }
             else
             {
-                _items.Add(new CartEntity
+                this.items.Add(new CartEntity
                 {
                     ProductId = productId,
                     ProductName = productName,
                     Price = price,
-                    Quantity = quantity
+                    Quantity = quantity,
                 });
             }
         }
 
         public void RemoveItem(int productId)
         {
-            var item = _items.FirstOrDefault(i => i.ProductId == productId);
+            var item = this.items.FirstOrDefault(i => i.ProductId == productId);
             if (item != null)
             {
-                _items.Remove(item);
+                this.items.Remove(item);
             }
         }
 
         public List<CartEntity> GetItems()
         {
-            return _items;
+            return this.items;
         }
 
         public decimal GetTotalAmount()
         {
-            return _items.Sum(i => i.TotalPrice);
+            return this.items.Sum(i => i.TotalPrice);
         }
 
         public void ClearCart()
         {
-            _items.Clear();
+            this.items.Clear();
         }
     }
 }

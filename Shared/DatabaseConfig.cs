@@ -1,3 +1,7 @@
+// <copyright file="DatabaseConfig.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using System.IO;
 using HomeAppliancesStore.Modules.Config;
 
@@ -9,7 +13,7 @@ namespace HomeAppliancesStore.Shared
         {
             EnsureFileExists(ConfigConstants.UsersPath, ConfigConstants.UsersHeader);
             EnsureFileExists(ConfigConstants.ProductsPath, ConfigConstants.ProductsHeader);
-            
+
             SeedDefaultData();
         }
 

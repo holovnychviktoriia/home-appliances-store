@@ -1,3 +1,7 @@
+// <copyright file="UserCsvParser.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using HomeAppliancesStore.Shared;
 
 namespace HomeAppliancesStore.Modules.User
@@ -14,7 +18,7 @@ namespace HomeAppliancesStore.Modules.User
                 Email = parts[1],
                 PasswordHash = parts[2],
                 Balance = decimal.Parse(parts[3]),
-                Role = parts[4]
+                Role = parts[4],
             };
         }
 

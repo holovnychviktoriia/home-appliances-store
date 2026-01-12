@@ -1,3 +1,7 @@
+// <copyright file="ProductCsvParser.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using HomeAppliancesStore.Shared;
 
 namespace HomeAppliancesStore.Modules.Product
@@ -14,7 +18,7 @@ namespace HomeAppliancesStore.Modules.Product
                 Name = parts[1],
                 Category = parts[2],
                 Price = decimal.Parse(parts[3]),
-                Quantity = int.Parse(parts[4])
+                Quantity = int.Parse(parts[4]),
             };
         }
 

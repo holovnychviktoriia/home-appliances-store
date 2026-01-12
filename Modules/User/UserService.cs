@@ -1,3 +1,7 @@
+// <copyright file="UserService.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using System.Collections.Generic;
 using System.Linq;
 using HomeAppliancesStore.Modules.Config;
@@ -7,47 +11,46 @@ namespace HomeAppliancesStore.Modules.User
 {
     public class UserService
     {
-        private readonly CsvFileRepository<UserEntity> _userRepository;
+        private readonly CsvFileRepository<UserEntity> userRepository;
 
         public UserService()
         {
-            _userRepository = new CsvFileRepository<UserEntity>(
+            this.userRepository = new CsvFileRepository<UserEntity>(
                 ConfigConstants.UsersPath,
-                new UserCsvParser()
-            );
+                new UserCsvParser());
         }
 
         public List<UserEntity> GetAllUsers()
         {
-            return _userRepository.ReadAll();
+            return this.userRepository.ReadAll();
         }
 
-        public UserEntity GetUserById(int id)
+        public UserEntity? GetUserById(int id)
         {
-            return _userRepository.ReadAll().FirstOrDefault(u => u.Id == id);
+            return this.userRepository.ReadAll().FirstOrDefault(u => u.Id == id);
         }
 
         public void TopUpBalance(int userId, decimal amount)
         {
-            var users = _userRepository.ReadAll();
+            var users = this.userRepository.ReadAll();
             var user = users.FirstOrDefault(u => u.Id == userId);
-            
+
             if (user != null)
             {
                 user.Balance += amount;
-                _userRepository.WriteAll(users, ConfigConstants.UsersHeader);
+                this.userRepository.WriteAll(users, ConfigConstants.UsersHeader);
             }
         }
 
         public void UpdateUserBalance(int userId, decimal newBalance)
         {
-            var users = GetAllUsers();
+            var users = this.GetAllUsers();
             var user = users.FirstOrDefault(u => u.Id == userId);
-            
+
             if (user != null)
             {
                 user.Balance = newBalance;
-                _userRepository.WriteAll(users, ConfigConstants.UsersHeader);
+                this.userRepository.WriteAll(users, ConfigConstants.UsersHeader);
             }
         }
     }

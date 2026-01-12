@@ -1,4 +1,7 @@
-using System;
+// <copyright file="AuthService.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,35 +13,34 @@ namespace HomeAppliancesStore.Modules.Auth
 {
     public class AuthService
     {
-        private readonly CsvFileRepository<UserEntity> _userRepository;
+        private readonly CsvFileRepository<UserEntity> userRepository;
 
         public AuthService()
         {
-            _userRepository = new CsvFileRepository<UserEntity>(
-                ConfigConstants.UsersPath, 
-                new UserCsvParser()
-            );
+            this.userRepository = new CsvFileRepository<UserEntity>(
+                ConfigConstants.UsersPath,
+                new UserCsvParser());
         }
 
-        public UserEntity Login(string email, string password)
+        public UserEntity? Login(string email, string password)
         {
-            var users = _userRepository.ReadAll();
-            string passwordHash = HashPassword(password);
-            
+            var users = this.userRepository.ReadAll();
+            string passwordHash = this.HashPassword(password);
+
             return users.FirstOrDefault(u => u.Email == email && u.PasswordHash == passwordHash);
         }
 
         public bool Register(string email, string password)
         {
-            var users = _userRepository.ReadAll();
+            var users = this.userRepository.ReadAll();
 
             if (users.Any(u => u.Email == email))
             {
-                return false; 
+                return false;
             }
 
             int newId = users.Any() ? users.Max(u => u.Id) + 1 : 1;
-            string passwordHash = HashPassword(password);
+            string passwordHash = this.HashPassword(password);
 
             var newUser = new UserEntity
             {
@@ -46,10 +48,10 @@ namespace HomeAppliancesStore.Modules.Auth
                 Email = email,
                 PasswordHash = passwordHash,
                 Balance = 0,
-                Role = "Customer"
+                Role = "Customer",
             };
 
-            _userRepository.Append(newUser);
+            this.userRepository.Append(newUser);
             return true;
         }
 
@@ -63,6 +65,7 @@ namespace HomeAppliancesStore.Modules.Auth
                 {
                     builder.Append(b.ToString("x2"));
                 }
+
                 return builder.ToString();
             }
         }

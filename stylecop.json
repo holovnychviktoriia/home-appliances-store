@@ -1,8 +1,8 @@
 {
   "settings": {
     "documentationRules": {
-      "companyName": "",
-      "copyrightText": "",
+      "companyName": "HomeAppliancesStore",
+      "copyrightText": "Copyright (c) HomeAppliancesStore. All rights reserved.",
       "xmlHeader": false,
       "fileNamingConvention": "metadata",
       "documentInterfaces": false,

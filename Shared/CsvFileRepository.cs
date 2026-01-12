@@ -1,34 +1,41 @@
+// <copyright file="CsvFileRepository.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace HomeAppliancesStore.Shared
 {
     public class CsvFileRepository<T>
     {
-        private readonly string _filePath;
-        private readonly ICsvParser<T> _parser;
+        private readonly string filePath;
+        private readonly ICsvParser<T> parser;
 
         public CsvFileRepository(string filePath, ICsvParser<T> parser)
         {
-            _filePath = filePath;
-            _parser = parser;
+            this.filePath = filePath;
+            this.parser = parser;
         }
 
         public List<T> ReadAll()
         {
-            if (!File.Exists(_filePath))
+            if (!File.Exists(this.filePath))
             {
                 return new List<T>();
             }
 
-            var lines = File.ReadAllLines(_filePath);
+            var lines = File.ReadAllLines(this.filePath);
             var items = new List<T>();
 
             for (int i = 1; i < lines.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(lines[i])) continue;
-                items.Add(_parser.Parse(lines[i]));
+                if (string.IsNullOrWhiteSpace(lines[i]))
+                {
+                    continue;
+                }
+
+                items.Add(this.parser.Parse(lines[i]));
             }
 
             return items;
@@ -39,15 +46,16 @@ namespace HomeAppliancesStore.Shared
             var lines = new List<string> { header };
             foreach (var item in items)
             {
-                lines.Add(_parser.ToCsv(item));
+                lines.Add(this.parser.ToCsv(item));
             }
-            File.WriteAllLines(_filePath, lines);
+
+            File.WriteAllLines(this.filePath, lines);
         }
 
         public void Append(T item)
         {
-            var line = _parser.ToCsv(item);
-            File.AppendAllText(_filePath, line + "\n");
+            var line = this.parser.ToCsv(item);
+            File.AppendAllText(this.filePath, line + "\n");
         }
     }
 }

@@ -1,3 +1,7 @@
+// <copyright file="AuthMenuActions.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using System;
 using HomeAppliancesStore.Modules.User;
 using HomeAppliancesStore.Shared;
@@ -6,14 +10,14 @@ namespace HomeAppliancesStore.Modules.Auth
 {
     public class AuthMenuActions
     {
-        private readonly AuthService _authService;
+        private readonly AuthService authService;
 
         public AuthMenuActions()
         {
-            _authService = new AuthService();
+            this.authService = new AuthService();
         }
 
-        public UserEntity Authenticate()
+        public UserEntity? Authenticate()
         {
             while (true)
             {
@@ -24,16 +28,20 @@ namespace HomeAppliancesStore.Modules.Auth
                 Console.WriteLine("0. Exit");
                 Console.Write("Select option: ");
 
-                string choice = Console.ReadLine();
+                string choice = Console.ReadLine() ?? string.Empty;
 
                 switch (choice)
                 {
                     case "1":
-                        var user = Login();
-                        if (user != null) return user;
+                        var user = this.Login();
+                        if (user != null)
+                        {
+                            return user;
+                        }
+
                         break;
                     case "2":
-                        Register();
+                        this.Register();
                         break;
                     case "0":
                         return null;
@@ -45,15 +53,22 @@ namespace HomeAppliancesStore.Modules.Auth
             }
         }
 
-        private UserEntity Login()
+        private UserEntity? Login()
         {
             Console.WriteLine("\n--- Login ---");
             Console.Write("Email: ");
-            string email = Console.ReadLine();
+            string email = Console.ReadLine() ?? string.Empty;
             Console.Write("Password: ");
-            string password = Console.ReadLine();
+            string password = Console.ReadLine() ?? string.Empty;
 
-            var user = _authService.Login(email, password);
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                Console.WriteLine("Email and password cannot be empty.");
+                Console.ReadKey();
+                return null;
+            }
+
+            var user = this.authService.Login(email, password);
             if (user != null)
             {
                 Console.WriteLine($"Welcome back, {user.Email}!");
@@ -70,19 +85,19 @@ namespace HomeAppliancesStore.Modules.Auth
         {
             Console.WriteLine("\n--- Register ---");
             Console.Write("Email: ");
-            string email = Console.ReadLine();
+            string email = Console.ReadLine() ?? string.Empty;
 
-            if (!ValidationUtils.IsValidEmail(email)) 
+            if (!ValidationUtils.IsValidEmail(email))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid email format! (Example: user@mail.com)");
                 Console.ResetColor();
                 Console.ReadKey();
-                return; 
+                return;
             }
 
             Console.Write("Password: ");
-            string password = Console.ReadLine();
+            string password = Console.ReadLine() ?? string.Empty;
 
             if (!ValidationUtils.IsValidPassword(password))
             {
@@ -93,7 +108,7 @@ namespace HomeAppliancesStore.Modules.Auth
                 return;
             }
 
-            bool success = _authService.Register(email, password);
+            bool success = this.authService.Register(email, password);
             if (success)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -106,6 +121,7 @@ namespace HomeAppliancesStore.Modules.Auth
                 Console.WriteLine("User with this email already exists.");
                 Console.ResetColor();
             }
+
             Console.ReadKey();
         }
     }

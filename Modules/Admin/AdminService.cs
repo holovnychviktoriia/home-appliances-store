@@ -1,3 +1,7 @@
+// <copyright file="AdminService.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,30 +12,40 @@ namespace HomeAppliancesStore.Modules.Admin
 {
     public class AdminService
     {
-        private readonly UserService _userService;
-        private readonly string _ordersFile = Path.Combine("Database", "orders.csv");
+        private readonly UserService userService;
+        private readonly string ordersFile = Path.Combine("Database", "orders.csv");
 
         public AdminService()
         {
-            _userService = new UserService();
+            this.userService = new UserService();
         }
 
         public List<UserEntity> GetAllUsers()
         {
-            return _userService.GetAllUsers();
+            return this.userService.GetAllUsers();
         }
 
         public List<OrderEntity> GetAllOrders()
         {
             List<OrderEntity> orders = new List<OrderEntity>();
-            if (!File.Exists(_ordersFile)) return orders;
+            if (!File.Exists(this.ordersFile))
+            {
+                return orders;
+            }
 
-            var lines = File.ReadAllLines(_ordersFile).Skip(1);
+            var lines = File.ReadAllLines(this.ordersFile).Skip(1);
             foreach (var line in lines)
             {
-                if (string.IsNullOrWhiteSpace(line)) continue;
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
                 var parts = line.Split(',');
-                if (parts.Length < 5) continue;
+                if (parts.Length < 5)
+                {
+                    continue;
+                }
 
                 try
                 {
@@ -41,11 +55,15 @@ namespace HomeAppliancesStore.Modules.Admin
                         UserId = int.Parse(parts[1]),
                         OrderDate = System.DateTime.Parse(parts[2]),
                         TotalAmount = decimal.Parse(parts[3]),
-                        OrderDetails = parts[4]
+                        OrderDetails = parts[4],
                     });
                 }
-                catch { continue; }
+                catch
+                {
+                    continue;
+                }
             }
+
             return orders;
         }
     }

@@ -1,3 +1,7 @@
+// <copyright file="AdminMenuActions.cs" company="HomeAppliancesStore">
+// Copyright (c) HomeAppliancesStore. All rights reserved.
+// </copyright>
+
 using System;
 using HomeAppliancesStore.Modules.Product;
 using HomeAppliancesStore.Modules.User;
@@ -6,13 +10,13 @@ namespace HomeAppliancesStore.Modules.Admin
 {
     public class AdminMenuActions
     {
-        private readonly ProductMenuActions _productMenuActions;
-        private readonly AdminService _adminService;
+        private readonly ProductMenuActions productMenuActions;
+        private readonly AdminService adminService;
 
         public AdminMenuActions()
         {
-            _productMenuActions = new ProductMenuActions();
-            _adminService = new AdminService();
+            this.productMenuActions = new ProductMenuActions();
+            this.adminService = new AdminService();
         }
 
         public void ShowAdminMenu(UserEntity admin)
@@ -31,13 +35,13 @@ namespace HomeAppliancesStore.Modules.Admin
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        _productMenuActions.ShowMenu();
+                        this.productMenuActions.ShowMenu();
                         break;
                     case "2":
-                        ShowAllUsers();
+                        this.ShowAllUsers();
                         break;
                     case "3":
-                        ShowAllOrders();
+                        this.ShowAllOrders();
                         break;
                     case "0":
                         logout = true;
@@ -49,13 +53,14 @@ namespace HomeAppliancesStore.Modules.Admin
         private void ShowAllUsers()
         {
             Console.WriteLine("\n--- All Registered Users ---");
-            var users = _adminService.GetAllUsers();
-            
+            var users = this.adminService.GetAllUsers();
+
             Console.WriteLine("{0,-5} {1,-25} {2,-10} {3,-10}", "ID", "Email", "Role", "Balance");
             foreach (var u in users)
             {
                 Console.WriteLine("{0,-5} {1,-25} {2,-10} {3,-10}", u.Id, u.Email, u.Role, u.Balance);
             }
+
             Console.WriteLine("\nPress any key...");
             Console.ReadKey();
         }
@@ -63,7 +68,7 @@ namespace HomeAppliancesStore.Modules.Admin
         private void ShowAllOrders()
         {
             Console.WriteLine("\n--- Order History ---");
-            var orders = _adminService.GetAllOrders();
+            var orders = this.adminService.GetAllOrders();
 
             if (orders.Count == 0)
             {
@@ -78,6 +83,7 @@ namespace HomeAppliancesStore.Modules.Admin
                 Console.WriteLine($"Details: {o.OrderDetails}");
                 Console.WriteLine("------------------------------------------------");
             }
+
             Console.WriteLine("\nPress any key...");
             Console.ReadKey();
         }

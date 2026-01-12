@@ -1,13 +1,12 @@
-﻿using System;
-using HomeAppliancesStore.Modules.Auth;
+﻿using HomeAppliancesStore.Modules.Auth;
 using HomeAppliancesStore.Modules.Main;
 using HomeAppliancesStore.Shared;
 
 namespace HomeAppliancesStore
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             DatabaseConfig.Initialize();
 
@@ -19,11 +18,11 @@ namespace HomeAppliancesStore
                 if (user != null)
                 {
                     var mainMenu = new MenuActions(user);
-                    mainMenu.Run(); 
+                    mainMenu.Run();
                 }
                 else
                 {
-                    break; 
+                    break;
                 }
             }
         }
